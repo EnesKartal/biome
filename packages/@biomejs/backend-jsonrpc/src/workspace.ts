@@ -3374,6 +3374,11 @@ export interface Nursery {
 	 */
 	noReturnInTest?: NoReturnInTestConfiguration;
 	/**
+	 * Disallow the deprecated Sass functions that read one channel of a color.
+	 * See https://biomejs.dev/linter/rules/no-scss-deprecated-color-functions
+	 */
+	noScssDeprecatedColorFunctions?: NoScssDeprecatedColorFunctionsConfiguration;
+	/**
 	 * Disallow comparing values to null in Sass @if conditions.
 	 * See https://biomejs.dev/linter/rules/no-scss-null-comparison
 	 */
@@ -7134,6 +7139,9 @@ export type NoReturnInFinallyConfiguration =
 export type NoReturnInTestConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoReturnInTestOptions;
+export type NoScssDeprecatedColorFunctionsConfiguration =
+	| RulePlainConfiguration
+	| RuleWithNoScssDeprecatedColorFunctionsOptions;
 export type NoScssNullComparisonConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoScssNullComparisonOptions;
@@ -10473,6 +10481,10 @@ export interface RuleWithNoReturnInFinallyOptions {
 export interface RuleWithNoReturnInTestOptions {
 	level: RulePlainConfiguration;
 	options?: NoReturnInTestOptions;
+}
+export interface RuleWithNoScssDeprecatedColorFunctionsOptions {
+	level: RulePlainConfiguration;
+	options?: NoScssDeprecatedColorFunctionsOptions;
 }
 export interface RuleWithNoScssNullComparisonOptions {
 	level: RulePlainConfiguration;
@@ -14157,6 +14169,7 @@ export type NoRestrictedDependenciesOptions = {};
 export type NoReturnArrayPushOptions = {};
 export type NoReturnInFinallyOptions = {};
 export type NoReturnInTestOptions = {};
+export type NoScssDeprecatedColorFunctionsOptions = {};
 export type NoScssNullComparisonOptions = {};
 export type NoSelfImportOptions = {};
 export type NoSelfNestedLayerOptions = {};
@@ -16578,6 +16591,7 @@ export type Category =
 	| "lint/nursery/noReturnArrayPush"
 	| "lint/nursery/noReturnInFinally"
 	| "lint/nursery/noReturnInTest"
+	| "lint/nursery/noScssDeprecatedColorFunctions"
 	| "lint/nursery/noScssNullComparison"
 	| "lint/nursery/noSelfImport"
 	| "lint/nursery/noSelfNestedLayer"
