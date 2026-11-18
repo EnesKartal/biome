@@ -3049,6 +3049,11 @@ export interface Nursery {
 	 */
 	noConstantComparisons?: NoConstantComparisonsConfiguration;
 	/**
+	 * Disallow scheduling Convex cron jobs at the start of the hour.
+	 * See https://biomejs.dev/linter/rules/no-convex-top-of-hour-crons
+	 */
+	noConvexTopOfHourCrons?: NoConvexTopOfHourCronsConfiguration;
+	/**
 	 * Disallow names that start or end with an underscore.
 	 * See https://biomejs.dev/linter/rules/no-dangling-underscore
 	 */
@@ -6954,6 +6959,9 @@ export type NoConsoleSpacesConfiguration =
 export type NoConstantComparisonsConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoConstantComparisonsOptions;
+export type NoConvexTopOfHourCronsConfiguration =
+	| RulePlainConfiguration
+	| RuleWithNoConvexTopOfHourCronsOptions;
 export type NoDanglingUnderscoreConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoDanglingUnderscoreOptions;
@@ -10153,6 +10161,10 @@ export interface RuleWithNoConsoleSpacesOptions {
 export interface RuleWithNoConstantComparisonsOptions {
 	level: RulePlainConfiguration;
 	options?: NoConstantComparisonsOptions;
+}
+export interface RuleWithNoConvexTopOfHourCronsOptions {
+	level: RulePlainConfiguration;
+	options?: NoConvexTopOfHourCronsOptions;
 }
 export interface RuleWithNoDanglingUnderscoreOptions {
 	level: RulePlainConfiguration;
@@ -13971,6 +13983,7 @@ export type NoChainedComparisonOptions = {};
 export type NoConfusingArraySpliceOptions = {};
 export type NoConsoleSpacesOptions = {};
 export type NoConstantComparisonsOptions = {};
+export type NoConvexTopOfHourCronsOptions = {};
 export type NoDanglingUnderscoreOptions = {};
 export type NoDisabledAttributeOptions = {};
 export type NoDoubleComparisonOptions = {};
@@ -16529,6 +16542,7 @@ export type Category =
 	| "lint/nursery/noConfusingArraySplice"
 	| "lint/nursery/noConsoleSpaces"
 	| "lint/nursery/noConstantComparisons"
+	| "lint/nursery/noConvexTopOfHourCrons"
 	| "lint/nursery/noDanglingUnderscore"
 	| "lint/nursery/noDisabledAttribute"
 	| "lint/nursery/noDoubleComparison"
