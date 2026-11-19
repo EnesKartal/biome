@@ -4484,6 +4484,11 @@ export interface Nursery {
 	 */
 	useTanstackQueryMutationPropertyOrder?: UseTanstackQueryMutationPropertyOrderConfiguration;
 	/**
+	 * Require TanStack Query options to be created with queryOptions().
+	 * See https://biomejs.dev/linter/rules/use-tanstack-query-query-options
+	 */
+	useTanstackQueryQueryOptions?: UseTanstackQueryQueryOptionsConfiguration;
+	/**
 	 * Require the TanStack Query QueryClient to be created once, not on every render.
 	 * See https://biomejs.dev/linter/rules/use-tanstack-query-stable-query-client
 	 */
@@ -7825,6 +7830,9 @@ export type UseTanstackQueryInfiniteQueryPropertyOrderConfiguration =
 export type UseTanstackQueryMutationPropertyOrderConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseTanstackQueryMutationPropertyOrderOptions;
+export type UseTanstackQueryQueryOptionsConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseTanstackQueryQueryOptionsOptions;
 export type UseTanstackQueryStableQueryClientConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseTanstackQueryStableQueryClientOptions;
@@ -11718,6 +11726,10 @@ export interface RuleWithUseTanstackQueryMutationPropertyOrderOptions {
 	level: RulePlainConfiguration;
 	options?: UseTanstackQueryMutationPropertyOrderOptions;
 }
+export interface RuleWithUseTanstackQueryQueryOptionsOptions {
+	level: RulePlainConfiguration;
+	options?: UseTanstackQueryQueryOptionsOptions;
+}
 export interface RuleWithUseTanstackQueryStableQueryClientOptions {
 	/**
 	 * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
@@ -14855,6 +14867,7 @@ export interface UseTanstackQueryExhaustiveDependenciesOptions {
 }
 export type UseTanstackQueryInfiniteQueryPropertyOrderOptions = {};
 export type UseTanstackQueryMutationPropertyOrderOptions = {};
+export type UseTanstackQueryQueryOptionsOptions = {};
 export type UseTanstackQueryStableQueryClientOptions = {};
 export interface UseTopLevelDescribeOptions {
 	/**
@@ -16887,6 +16900,7 @@ export type Category =
 	| "lint/nursery/useTanstackQueryExhaustiveDependencies"
 	| "lint/nursery/useTanstackQueryInfiniteQueryPropertyOrder"
 	| "lint/nursery/useTanstackQueryMutationPropertyOrder"
+	| "lint/nursery/useTanstackQueryQueryOptions"
 	| "lint/nursery/useTanstackQueryStableQueryClient"
 	| "lint/nursery/useTopLevelDescribe"
 	| "lint/nursery/useTopLevelHeading"
