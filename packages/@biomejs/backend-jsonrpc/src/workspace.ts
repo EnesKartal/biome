@@ -3014,6 +3014,11 @@ export interface Nursery {
 	 */
 	noBooleanSortComparator?: NoBooleanSortComparatorConfiguration;
 	/**
+	 * Disallow break statements inside nested loops and inside switch statements in loops.
+	 * See https://biomejs.dev/linter/rules/no-break-in-nested-loop
+	 */
+	noBreakInNestedLoop?: NoBreakInNestedLoopConfiguration;
+	/**
 	 * Disallow the deprecated Buffer() constructor in Node.js.
 	 * See https://biomejs.dev/linter/rules/no-buffer-constructor
 	 */
@@ -6938,6 +6943,9 @@ export type NoBaseToStringConfiguration =
 export type NoBooleanSortComparatorConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoBooleanSortComparatorOptions;
+export type NoBreakInNestedLoopConfiguration =
+	| RulePlainConfiguration
+	| RuleWithNoBreakInNestedLoopOptions;
 export type NoBufferConstructorConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoBufferConstructorOptions;
@@ -10125,6 +10133,10 @@ export interface RuleWithNoBooleanSortComparatorOptions {
 	fix?: FixKind;
 	level: RulePlainConfiguration;
 	options?: NoBooleanSortComparatorOptions;
+}
+export interface RuleWithNoBreakInNestedLoopOptions {
+	level: RulePlainConfiguration;
+	options?: NoBreakInNestedLoopOptions;
 }
 export interface RuleWithNoBufferConstructorOptions {
 	level: RulePlainConfiguration;
@@ -13976,6 +13988,13 @@ export interface NoBaseToStringOptions {
 	ignoredTypeNames?: string[];
 }
 export type NoBooleanSortComparatorOptions = {};
+export interface NoBreakInNestedLoopOptions {
+	/**
+	 * Also report `continue` statements without a label inside nested loops and inside
+	 * `switch` statements in loops (default: false).
+	 */
+	checkContinue?: boolean;
+}
 export type NoBufferConstructorOptions = {};
 export type NoBunModulesOptions = {};
 export type NoCanvasToImageOptions = {};
@@ -16532,6 +16551,7 @@ export type Category =
 	| "lint/nursery/noAwaitInPromiseMethods"
 	| "lint/nursery/noBaseToString"
 	| "lint/nursery/noBooleanSortComparator"
+	| "lint/nursery/noBreakInNestedLoop"
 	| "lint/nursery/noBufferConstructor"
 	| "lint/nursery/noBunModules"
 	| "lint/nursery/noCanvasToImage"
