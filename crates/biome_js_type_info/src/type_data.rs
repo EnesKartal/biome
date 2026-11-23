@@ -1382,6 +1382,7 @@ pub enum TypeofExpression {
     CallArgument(TypeofCallArgumentExpression),
     ComputedMember(TypeofComputedMemberExpression),
     Conditional(TypeofConditionalExpression),
+    DefaultedParameter(TypeofDefaultedParameterExpression),
     Destructure(TypeofDestructureExpression),
     Index(TypeofIndexExpression),
     OptionalChainIndex(TypeofIndexExpression),
@@ -1413,6 +1414,12 @@ pub struct TypeofAwaitExpression {
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct TypeofBitwiseNotExpression {
     pub argument: TypeReference,
+}
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+pub struct TypeofDefaultedParameterExpression {
+    pub parameter: TypeReference,
+    pub default: TypeReference,
 }
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]

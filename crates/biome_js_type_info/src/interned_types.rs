@@ -1512,6 +1512,9 @@ impl<'db> TypeDataSlots<'db> {
             }
             TypeofExpression::Await(expression) => self.slots.push(expression.argument),
             TypeofExpression::BitwiseNot(expression) => self.slots.push(expression.argument),
+            TypeofExpression::DefaultedParameter(expression) => {
+                self.slots.extend([expression.parameter, expression.default]);
+            }
             TypeofExpression::Call(expression) => {
                 self.slots.push(expression.callee);
                 self.push_call_argument_slots(&expression.arguments);
@@ -1984,6 +1987,12 @@ impl<'db> TypeDataSlotReplacements<'db> {
             TypeofExpression::BitwiseNot(_) => {
                 TypeofExpression::BitwiseNot(TypeofBitwiseNotExpression {
                     argument: self.take_type()?,
+                })
+            }
+            TypeofExpression::DefaultedParameter(_) => {
+                TypeofExpression::DefaultedParameter(TypeofDefaultedParameterExpression {
+                    parameter: self.take_type()?,
+                    default: self.take_type()?,
                 })
             }
             TypeofExpression::Call(expression) => TypeofExpression::Call(TypeofCallExpression {
@@ -2479,6 +2488,7 @@ pub enum TypeofExpression<'db> {
     CallArgument(TypeofCallArgumentExpression<'db>),
     ComputedMember(TypeofComputedMemberExpression<'db>),
     Conditional(TypeofConditionalExpression<'db>),
+    DefaultedParameter(TypeofDefaultedParameterExpression<'db>),
     Destructure(TypeofDestructureExpression<'db>),
     Index(TypeofIndexExpression<'db>),
     OptionalChainIndex(TypeofIndexExpression<'db>),
@@ -2505,6 +2515,12 @@ pub struct TypeofAdditionExpression<'db> {
 #[derive(Clone, Debug, Eq, Hash, PartialEq, salsa::SalsaValue)]
 pub struct TypeofAwaitExpression<'db> {
     pub argument: TypeData<'db>,
+}
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq, salsa::SalsaValue)]
+pub struct TypeofDefaultedParameterExpression<'db> {
+    pub parameter: TypeData<'db>,
+    pub default: TypeData<'db>,
 }
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, salsa::SalsaValue)]
@@ -3167,6 +3183,12 @@ fn convert_typeof_expression<'db>(
         raw::TypeofExpression::BitwiseNot(expression) => {
             TypeofExpression::BitwiseNot(TypeofBitwiseNotExpression {
                 argument: resolve_reference(&expression.argument),
+            })
+        }
+        raw::TypeofExpression::DefaultedParameter(expression) => {
+            TypeofExpression::DefaultedParameter(TypeofDefaultedParameterExpression {
+                parameter: resolve_reference(&expression.parameter),
+                default: resolve_reference(&expression.default),
             })
         }
         raw::TypeofExpression::Call(expression) => TypeofExpression::Call(TypeofCallExpression {

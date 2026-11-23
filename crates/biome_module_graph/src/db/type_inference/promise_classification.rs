@@ -707,6 +707,7 @@ fn classify_expression(
                         TypeofExpression::Addition(_)
                         | TypeofExpression::Await(_)
                         | TypeofExpression::BitwiseNot(_)
+                        | TypeofExpression::DefaultedParameter(_)
                         | TypeofExpression::Call(_)
                         | TypeofExpression::CallArgument(_)
                         | TypeofExpression::Parameter(_)

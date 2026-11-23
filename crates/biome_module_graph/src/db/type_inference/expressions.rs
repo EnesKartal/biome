@@ -145,6 +145,15 @@ impl<'db> ResolutionCtx<'db, '_> {
                 let argument = self.resolve(&expression.argument);
                 Some(self.resolve_number_or_bigint_unary_expression(argument))
             }
+            RawTypeofExpression::DefaultedParameter(expression) => {
+                let parameter = self.resolve(&expression.parameter);
+                let default = self.resolve(&expression.default);
+                let non_undefined = self.destructured_type(parameter, true);
+                Some(InferredTypeData::union_from_types(
+                    self.db,
+                    vec![non_undefined, default],
+                ))
+            }
             RawTypeofExpression::Call(expression) => {
                 let callee = self.resolve(&expression.callee);
                 Some(self.resolve_call_expression(callee, &expression.arguments))
@@ -316,6 +325,13 @@ impl<'db> ResolutionCtx<'db, '_> {
             }
             InferredTypeofExpression::BitwiseNot(expression) => {
                 Some(self.resolve_number_or_bigint_unary_expression(expression.argument))
+            }
+            InferredTypeofExpression::DefaultedParameter(expression) => {
+                let non_undefined = self.destructured_type(expression.parameter, true);
+                Some(InferredTypeData::union_from_types(
+                    self.db,
+                    vec![non_undefined, expression.default],
+                ))
             }
             InferredTypeofExpression::Call(expression) => Some(
                 self.resolve_inferred_call_expression(expression.callee, &expression.arguments),

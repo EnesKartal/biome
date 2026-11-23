@@ -671,6 +671,9 @@ impl Format<FormatTypeContext> for TypeofExpression {
             Self::UnaryMinus(expr) => {
                 write!(f, [&format_args![token("-"), &expr.argument]])
             }
+            Self::DefaultedParameter(expr) => {
+                write!(f, [&format_args![&expr.parameter, space(), token("="), space(), &expr.default]])
+            }
         }
     }
 }

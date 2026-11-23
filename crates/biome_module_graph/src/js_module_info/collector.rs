@@ -526,10 +526,26 @@ impl JsModuleInfoCollector {
                 {
                     return ty;
                 }
-                return self
+                let ty = self
                     .function_parameters
                     .get(param.syntax())
                     .map_or_default(|param| param.binding_type(binding_name));
+                if let Some(initializer) = param.initializer()
+                    && matches!(param.binding(), Ok(AnyJsBindingPattern::AnyJsBinding(_)))
+                    && let Ok(default_expr) = initializer.expression()
+                {
+                    let default = self.resolve_expression(scope_id, &default_expr).into_owned();
+                    let default = self.reference_to_owned_data(default);
+                    return self.reference_to_owned_data(TypeData::from(
+                        biome_js_type_info::TypeofExpression::DefaultedParameter(
+                            biome_js_type_info::TypeofDefaultedParameterExpression {
+                                parameter: ty,
+                                default,
+                            },
+                        ),
+                    ));
+                }
+                return ty;
             } else if let Some(param) = JsRestParameter::cast_ref(&ancestor) {
                 return self
                     .function_parameters
