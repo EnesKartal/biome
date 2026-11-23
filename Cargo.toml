@@ -172,8 +172,8 @@ libc                         = "0.2.191"
 # See: https://github.com/biomejs/biome/issues/10270
 # See: https://github.com/biomejs/biome/issues/11242
 # See: https://github.com/biomejs/biome/issues/12909
-libmimalloc-sys              = "=0.1.44"
-mimalloc                     = "=0.1.48"
+libmimalloc-sys              = "=0.1.49"
+mimalloc                     = "=0.1.52"
 notify                       = "8.2.2"
 once_cell                    = "1.21.4"
 owo-colors                   = "4.4.0"
