@@ -555,12 +555,15 @@ fn parse_version_string(
         }
         RangeOperator::Caret => {
             let version: Version = version_str.parse()?;
+            let core_dots = count_dots(version_str.split(['-', '+']).next().unwrap_or(version_str));
             if version.major > 0 {
                 push_range_from_version_to(set, version, Version::inc_major);
             } else if version.minor > 0 {
                 push_range_from_version_to(set, version, Version::inc_minor);
-            } else if version.patch > 0 {
+            } else if version.patch > 0 || core_dots >= 2 {
                 push_range_from_version_to(set, version, Version::inc_patch);
+            } else if core_dots == 1 {
+                push_range_from_version_to(set, version, Version::inc_minor);
             } else {
                 push_unique_comparator(
                     set,

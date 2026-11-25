@@ -322,6 +322,8 @@ range_parse_tests![
     minor_asterisk_patch_asterisk => ["2.*.*", ">=2.0.0 <3.0.0-0"],
     patch_asterisk => ["1.2.*", ">=1.2.0 <1.3.0-0"],
     caret_zero => ["^0", "<1.0.0-0"],
+    caret_zero_zero => ["^0.0", ">=0.0.0 <0.1.0-0"],
+    caret_zero_zero_zero => ["^0.0.0", ">=0.0.0 <0.0.1-0"],
     caret_zero_minor => ["^0.1", ">=0.1.0 <0.2.0-0"],
     caret_one => ["^1.0", ">=1.0.0 <2.0.0-0"],
     caret_minor => ["^1.2", ">=1.2.0 <2.0.0-0"],
